@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* prev;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+
+void insertAtEnd(int val) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = val;
+    newNode->next = NULL;
+    if (head == NULL) {
+        newNode->prev = NULL;
+        head = newNode;
+    } else {
+        struct Node* temp = head;
+        while (temp->next != NULL)
+            temp = temp->next;
+        temp->next = newNode;
+        newNode->prev = temp;
+    }
+}
+
+void deleteFromEnd() {
+    if (head == NULL)
+        printf("List is empty.\n");
+    else if (head->next == NULL) {
+        printf("Deleted: %d\n", head->data);
+        free(head);
+        head = NULL;
+    } else {
+        struct Node* temp = head;
+        while (temp->next != NULL)
+            temp = temp->next;
+        printf("Deleted: %d\n", temp->data);
+        temp->prev->next = NULL;
+        free(temp);
+    }
+}
+
+void display() {
+    struct Node* temp = head;
+    if (temp == NULL)
+        printf("List is empty.\n");
+    else {
+        printf("Doubly Linked List: ");
+        while (temp != NULL) {
+            printf("%d ", temp->data);
+            temp = temp->next;
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int choice, val;
+    do {
+        printf("\n--- Doubly Linked List Operations ---\n");
+        printf("1. Insert at End\n2. Delete from End\n3. Display\n4. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+        case 1:
+            printf("Enter value: ");
+            scanf("%d", &val);
+            insertAtEnd(val);
+            break;
+        case 2:
+            deleteFromEnd();
+            break;
+        case 3:
+            display();
+            break;
+        case 4:
+            printf("Exiting...\n");
+            break;
+        default:
+            printf("Invalid choice!\n");
+        }
+    } while (choice != 4);
+    return 0;
+}
+OUTPUT;
+1
+Enter value: 10
+1
+Enter value: 20
+3
+Doubly Linked List: 10 20
+2
+Deleted: 20
