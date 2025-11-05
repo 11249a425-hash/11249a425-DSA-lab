@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* front = NULL;
+struct Node* rear = NULL;
+
+void enqueue(int val) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = val;
+    newNode->next = NULL;
+    if (rear == NULL)
+        front = rear = newNode;
+    else {
+        rear->next = newNode;
+        rear = newNode;
+    }
+    printf("%d enqueued to queue.\n", val);
+}
+
+void dequeue() {
+    if (front == NULL)
+        printf("Queue Underflow!\n");
+    else {
+        struct Node* temp = front;
+        printf("%d dequeued from queue.\n", front->data);
+        front = front->next;
+        if (front == NULL)
+            rear = NULL;
+        free(temp);
+    }
+}
+
+void display() {
+    if (front == NULL)
+        printf("Queue is empty.\n");
+    else {
+        struct Node* temp = front;
+        printf("Queue elements: ");
+        while (temp != NULL) {
+            printf("%d ", temp->data);
+            temp = temp->next;
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int choice, val;
+    do {
+        printf("\n--- Queue Using Linked List ---\n");
+        printf("1. Enqueue\n2. Dequeue\n
+OUTPUT;
+1
+Enter value: 10
+10 enqueued to queue.
+1
+Enter value: 20
+20 enqueued to queue.
+3
+Queue elements: 10 20
+2
+10 dequeued from queue.
